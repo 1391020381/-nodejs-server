@@ -12,7 +12,19 @@ async function bootstrap(){
     server.use('/moulds',express.static(mouldsDir))
     server.use(await initMiddlewares())
     server.use(await initControllers())
+    server.use(errorHandle)
     await promisify(server.listen.bind(server,port))()
     console.log(` Started on port ${port}`)
+}
+process.on('uncaughtException',(err)=>{
+    console.log(err)
+    process.exit(1)
+})
+function errorHandle(err,req,next){
+    if(res.headersSent){
+        return next(err)
+    }
+    console.log(err)
+    res.redirect('/500.html')
 }
 bootstrap()

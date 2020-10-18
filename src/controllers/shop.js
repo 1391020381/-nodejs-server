@@ -2,7 +2,7 @@ const { Router } = require('express');
 const bodyParser = require('body-parser')
 const shopService = require('../services/shop');
 const { createShopFormSchema }= require('../moulds/ShopForm');
-const route = require('color-convert/route');
+const cc = require('../utils/cc');
 
 class ShopController {
   shopService;
@@ -19,14 +19,14 @@ class ShopController {
     return router;
   }
 
-  getAll = async (req, res) => {
+  getAll = cc(async (req, res) => {
     const { pageIndex, pageSize } = req.query;
     const shopList = await this.shopService.find({ pageIndex, pageSize });
 
     res.send({ success: true, data: shopList });
-  };
+  });
 
-  getOne = async (req, res) => {
+  getOne = cc(async (req, res) => {
     const { shopId } = req.params;
     const shopList = await this.shopService.find({ id: shopId });
 
@@ -35,9 +35,9 @@ class ShopController {
     } else {
       res.status(404).send({ success: false, data: null });
     }
-  };
+  });
 
-  put = async (req, res) => {
+  put = cc(async (req, res) => {
     const { shopId } = req.params;
     const { name } = req.query;
     try {
@@ -59,9 +59,9 @@ class ShopController {
     } else {
       res.status(404).send({ success: false, data: null });
     }
-  };
+  });
 
-  delete = async (req, res) => {
+  delete = cc(async (req, res) => {
     const { shopId } = req.params;
     const success = await this.shopService.remove({ id: shopId });
 
@@ -69,8 +69,8 @@ class ShopController {
       res.status(404);
     }
     res.send({ success });
-  };
-  post = async (req,res)=>{
+  });
+  post = cc(async (req,res)=>{
     const { name } = req.body
     try{
       await createShopFormSchema().validate({name})
@@ -80,7 +80,7 @@ class ShopController {
     const shopInfo = await this.shopService.create({values:{name}})
     console.log(shopInfo,'shopInfo')
     res.end(JSON.stringify({success:true,data:shopInfo}))
-  }
+  })
 }
 
 module.exports = async () => {
