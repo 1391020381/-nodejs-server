@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>00-express-static</title>
+    <link rel="stylesheet" href="./index.css">
 </head>
 <body>
     <div id="root"></div>
 
     <script type="module">
+        import './glue.js'
       import { refreshShopList, bindShopInfoEvents } from './index.js';
-
+    
       async function bootstrap() {
         await refreshShopList();
         await bindShopInfoEvents();
