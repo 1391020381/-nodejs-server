@@ -6,6 +6,17 @@
     <title>00-express-static</title>
 </head>
 <body>
-    <h1>It works!</h1>
+    <div id="root"></div>
+
+    <script type="module">
+      import { refreshShopList, bindShopInfoEvents } from './index.js';
+
+      async function bootstrap() {
+        await refreshShopList();
+        await bindShopInfoEvents();
+      }
+
+      bootstrap();
+    </script>
 </body>
 </html>
