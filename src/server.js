@@ -20,7 +20,7 @@ process.on('uncaughtException',(err)=>{
     console.log(err)
     process.exit(1)
 })
-function errorHandle(err,req,next){
+function errorHandle(err,req,res,next){
     if(res.headersSent){
         return next(err)
     }
