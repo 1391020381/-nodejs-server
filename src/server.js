@@ -8,9 +8,10 @@ const port = parseInt(process.env.PROT || '9000')
 const publicDir = resolve('public')
 const mouldsDir = resolve('src/moulds')
 async function bootstrap(){
+    server.use(await initMiddlewares())
     server.use(express.static(publicDir))
     server.use('/moulds',express.static(mouldsDir))
-    server.use(await initMiddlewares())
+    
     server.use(await initControllers())
     server.use(errorHandle)
     await promisify(server.listen.bind(server,port))()
