@@ -6,13 +6,16 @@ module.exports = function loginMiddleware(
     whiteList = {
         '/500.html':['get'],
         '/api/health':['get'],
-        '/api/login':['post']
+        '/api/login':['post'],
+        '/api/login/github':['get'],
+        '/api/login/github/callback':['get']
     }
     ){
 
     whiteList[loginPath] = ['get']
     return (req,res,next)=>{
         const { pathname } = parse(req.url)
+        console.log('pathname:',pathname)
         if(req.session.logined&&pathname == loginPath){
             res.redirect(homepagePath)
         }
