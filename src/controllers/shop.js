@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const shopService = require('../services/shop');
 const { createShopFormSchema }= require('../moulds/ShopForm');
 const cc = require('../utils/cc');
-
+const escapeHtmlInObject = require('../utils/escape-html-in-object')
 class ShopController {
   shopService;
 
@@ -23,7 +23,7 @@ class ShopController {
     const { pageIndex, pageSize } = req.query;
     const shopList = await this.shopService.find({ pageIndex, pageSize });
 
-    res.send({ success: true, data: shopList });
+    res.send(escapeHtmlInObject({ success: true, data: shopList }));
   });
 
   getOne = cc(async (req, res) => {
@@ -31,9 +31,9 @@ class ShopController {
     const shopList = await this.shopService.find({ id: shopId });
 
     if (shopList.length) {
-      res.send({ success: true, data: shopList[0] });
+      res.send(escapeHtmlInObject({ success: true, data: shopList[0] }));
     } else {
-      res.status(404).send({ success: false, data: null });
+      res.status(404).send(escapeHtmlInObject({ success: false, data: null }));
     }
   });
 
@@ -46,7 +46,7 @@ class ShopController {
       console.log( await createShopFormSchema().validate({name}))
     }catch(e){
       console.log('e:',e)
-       res.status(404).send({success:false,message:e.message})
+       res.status(404).send(escapeHtmlInObject({success:false,message:e.message}))
        return
     }
     const shopInfo = await this.shopService.modify({
@@ -55,9 +55,9 @@ class ShopController {
     });
 
     if (shopInfo) {
-      res.send({ success: true, data: shopInfo });
+      res.send(escapeHtmlInObject({ success: true, data: shopInfo }));
     } else {
-      res.status(404).send({ success: false, data: null });
+      res.status(404).send(escapeHtmlInObject({success: false, data: null }));
     }
   });
 
@@ -68,18 +68,18 @@ class ShopController {
     if (!success) {
       res.status(404);
     }
-    res.send({ success });
+    res.send(escapeHtmlInObject({ success }));
   });
   post = cc(async (req,res)=>{
     const { name } = req.body
     try{
       await createShopFormSchema().validate({name})
     }catch(e){
-        res.status(400).send({success:false,message:e.message})
+        res.status(400).send(escapeHtmlInObject({success:false,message:e.message}))
     }
     const shopInfo = await this.shopService.create({values:{name}})
     console.log(shopInfo,'shopInfo')
-    res.end(JSON.stringify({success:true,data:shopInfo}))
+    res.end(escapeHtmlInObject({success:true,data:shopInfo}))
   })
 }
 
