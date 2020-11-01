@@ -46,7 +46,7 @@ class ShopController {
       console.log( await createShopFormSchema().validate({name}))
     }catch(e){
       console.log('e:',e)
-       res.status(404).send(escapeHtmlInObject({success:false,message:e.message}))
+       res.status(404).send({success:false,message:e.message})
        return
     }
     const shopInfo = await this.shopService.modify({
@@ -57,7 +57,7 @@ class ShopController {
     if (shopInfo) {
       res.send(escapeHtmlInObject({ success: true, data: shopInfo }));
     } else {
-      res.status(404).send(escapeHtmlInObject({success: false, data: null }));
+      res.status(404).send({success: false, data: null });
     }
   });
 
@@ -68,18 +68,18 @@ class ShopController {
     if (!success) {
       res.status(404);
     }
-    res.send(escapeHtmlInObject({ success }));
+    res.send({ success });
   });
   post = cc(async (req,res)=>{
     const { name } = req.body
     try{
       await createShopFormSchema().validate({name})
     }catch(e){
-        res.status(400).send(escapeHtmlInObject({success:false,message:e.message}))
+        res.status(400).send({success:false,message:e.message})
     }
     const shopInfo = await this.shopService.create({values:{name}})
     console.log(shopInfo,'shopInfo')
-    res.end(escapeHtmlInObject({success:true,data:shopInfo}))
+    res.send(escapeHtmlInObject({ success: true, data: shopInfo }));
   })
 }
 
