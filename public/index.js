@@ -53,13 +53,18 @@ export async function refreshShopList() {
     }
     await fetch(`/api/shop/${shopId}?name=${encodeURIComponent(name)}`, {
       method: 'PUT',
+      headers:{
+        'Csrf-Token':__CSRF_TOKEN
+      }
     });
     await refreshShopList();
   }
   
   export async function removeShopInfo(e) {
     const shopId = e.target.parentElement.dataset.shopId;
-    const res = await fetch(`/api/shop/${shopId}`, { method: 'DELETE' });
+    const res = await fetch(`/api/shop/${shopId}`, { method: 'DELETE',headers:{
+      'Csrf-Token':__CSRF_TOKEN
+    } });
     await refreshShopList();
   }
   export async function createShopInfo(e) {
@@ -77,6 +82,7 @@ export async function refreshShopList() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
+        'Csrf-Token':__CSRF_TOKEN
       },
       body: `name=${encodeURIComponent(name)}`,
     });
