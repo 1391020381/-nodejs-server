@@ -1,13 +1,9 @@
 const passport = require('passport')
 const { Strategy:GithubStrategy } = require('passport-github')
-const GITHUB_STRATEGY_OPTTIONS = {
-    clientID:"82a5a6a76353473a1fb9",
-    clientSecret:"86a613e8952a7a31bb703a5ec2abeb3eaaaae1ab",
-    callbackURL:"http://localhost:9000/api/loign/github/callback"
-}
+const { githubStrategyOptions } = require('../config')
 
 const githubStrategy = new GithubStrategy(
-    GITHUB_STRATEGY_OPTTIONS,
+    githubStrategyOptions,
     (accessToken,refreshToken,profile,done)=>{
         const user = {}
         console.log('githubStrategy:',accessToken,refreshToken,profile)

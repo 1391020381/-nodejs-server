@@ -4,7 +4,11 @@
   "description": "* [从零搭建 Node.js 企业级 Web 服务器](https://github.com/licg9999/nodejs-server-examples)",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/server.js",
+    "dev": "nodemon src/server.js",
+    "start":"node -r ./scripts/env src/server.js",
+    "start:prod":"cross-env NODE_ENV=production node -r ./scripts/env src/server.js",
+    "sequelize":"sequelize",
+    "sequelize:prod":"cross-env NODE_ENV=production sequelize",
     "build:yup": "rollup node_modules/yup -o src/moulds/yup.js -p @rollup/plugin-node-resolve,@rollup/plugin-commonjs,rollup-plugin-terser -f umd -n 'yup'"
   },
   "repository": {
@@ -22,11 +26,14 @@
     "body-parser": "^1.19.0",
     "connect-session-sequelize": "^6.1.1",
     "cookie-parser": "^1.4.5",
+    "cross-env": "^7.0.2",
     "csurf": "^1.11.0",
+    "dotenv": "^8.2.0",
     "escape-html": "^1.0.3",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "helmet": "^4.1.1",
+    "lodash.merge": "^4.6.2",
     "nodemon": "^2.0.5",
     "passport": "^0.4.1",
     "passport-github": "^1.1.0",

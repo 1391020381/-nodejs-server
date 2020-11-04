@@ -8,7 +8,7 @@ class CsrfController {
     }
     getScript = (req,res)=>{
         res.type('js')
-        res.end(`window.__CSRF_TOKEN__'${req.csrfToken()}';`)
+        res.end(`window.__CSRF_TOKEN__='${req.csrfToken()}';`)
     }
 }
 module.exports = async ()=>{

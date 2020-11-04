@@ -1,8 +1,8 @@
 const session = require('express-session');
 const sessionSequelize = require('connect-session-sequelize');
 const { sequelize } = require('../models');
-
-module.exports = function sessionMiddleware(secret) {
+const {sessionCookieSecret,sessionCookieMaxAge } = require('../config')
+module.exports = function sessionMiddleware() {
   const SequelizeStore = sessionSequelize(session.Store);
 
   const store = new SequelizeStore({
@@ -12,8 +12,8 @@ module.exports = function sessionMiddleware(secret) {
   });
 
   return session({
-    secret,
-    cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 },
+    secret:sessionCookieSecret,
+    cookie: { maxAge: sessionCookieMaxAge },
     store,
     resave: false,
     proxy: true,

@@ -1,5 +1,7 @@
 import './moulds/ShopForm.js'
 const { createShopFormSchema } = window.moulds
+
+var __CSRF_TOKEN = 'abc'
 export async function refreshShopList() {
     const res = await fetch('/api/shop');
     const { data: shopList } = await res.json();
