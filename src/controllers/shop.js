@@ -21,7 +21,8 @@ class ShopController {
 
   getAll = cc(async (req, res) => {
     const { pageIndex, pageSize } = req.query;
-    const shopList = await this.shopService.find({ pageIndex, pageSize });
+    const { logging } = req
+    const shopList = await this.shopService.find({ pageIndex, pageSize,logging });
 
     res.send(escapeHtmlInObject({ success: true, data: shopList }));
   });

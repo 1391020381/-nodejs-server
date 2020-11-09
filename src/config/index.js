@@ -1,5 +1,6 @@
 const merge = require('lodash.merge');
-
+const logger = require('../utils/logger')
+const { logging } = logger
 const config = {
   // 默认配置
   default: {
@@ -26,6 +27,8 @@ const config = {
     db: {
       dialect: 'sqlite',
       storage: ':memory:',
+      benchmark:true,
+      logging:logging(logger,'debug'),
       define: {
         underscored: true,
       },
