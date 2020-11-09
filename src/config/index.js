@@ -17,7 +17,16 @@ const config = {
       '/api/login/github': ['get'],
       '/api/login/github/callback': ['get'],
     },
-
+    mailerOptions:{
+      host:'smtp.126.com',
+      port:456,
+      secure:true,
+      logger:logger.child({type:'mail'}),
+      auth:{
+        user:process.env.MAILER_USER,
+        pass:process.env.MAILER_PASS
+      }
+    },
     githubStrategyOptions: {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,

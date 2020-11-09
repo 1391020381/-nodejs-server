@@ -3,7 +3,7 @@ const { shop } = require('../models');
 class ShopService {
   async init() {}
 
-  async find({ id, pageIndex = 0, pageSize = 10 }) {
+  async find({ id, pageIndex = 0, pageSize = 10 ,where,logging}) {
     if (id) {
       return [await shop.findByPk(id)];
     }
@@ -11,6 +11,8 @@ class ShopService {
     return await shop.findAll({
       offset: pageIndex * pageSize,
       limit: pageSize,
+      where,
+      logging
     });
   }
 

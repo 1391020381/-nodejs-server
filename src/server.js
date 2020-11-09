@@ -3,6 +3,7 @@ const {resolve} = require('path')
 const { promisify } = require('util')
 const initMiddlewares = require('./middlewares')
 const initControllers = require('./controllers')
+const initSchedules = require('./services')
 const server = express()
 const port = parseInt(process.env.PROT || '9000')
 const publicDir = resolve('public')
@@ -14,6 +15,7 @@ async function bootstrap(){
     
     server.use(await initControllers())
     server.use(errorHandle)
+    await initSchedules()
     await promisify(server.listen.bind(server,port))()
     console.log(` Started on port ${port}`)
 }
